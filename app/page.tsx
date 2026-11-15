@@ -6,59 +6,9 @@ import Navbar from "./component/nav";
 import Link from "next/link";
 import RollingText from "./component/rolling-text";
 import FAQ from "./component/faq";
-
-// Multiple blinking stars located exclusively in the upper sky band, strictly above the clouds (top 3% - 41%)
-const blinkingStars = [
-  // Top sky band (3% - 15%)
-  { top: "4%", left: "8%", size: 1.5, type: "sharp", duration: "2.8s", delay: "0.2s" },
-  { top: "6%", left: "19%", size: 2, type: "pulse", duration: "3.5s", delay: "1.1s" },
-  { top: "3%", left: "31%", size: 1, type: "soft", duration: "4.2s", delay: "0.5s" },
-  { top: "7%", left: "42%", size: 2.5, type: "sharp", duration: "2.2s", delay: "1.7s" },
-  { top: "4%", left: "55%", size: 1.5, type: "soft", duration: "3.8s", delay: "0.9s" },
-  { top: "8%", left: "67%", size: 2, type: "pulse", duration: "4.5s", delay: "2.4s" },
-  { top: "5%", left: "78%", size: 1, type: "sharp", duration: "2.6s", delay: "0.4s" },
-  { top: "3%", left: "89%", size: 2, type: "soft", duration: "3.2s", delay: "1.5s" },
-  { top: "9%", left: "95%", size: 1.5, type: "pulse", duration: "4.0s", delay: "2.8s" },
-  { top: "11%", left: "14%", size: 1, type: "soft", duration: "3.6s", delay: "0.8s" },
-  { top: "13%", left: "26%", size: 2.5, type: "sharp", duration: "2.5s", delay: "1.9s" },
-  { top: "10%", left: "37%", size: 1.5, type: "pulse", duration: "4.4s", delay: "0.3s" },
-  { top: "14%", left: "49%", size: 1, type: "soft", duration: "3.1s", delay: "2.1s" },
-  { top: "12%", left: "61%", size: 2, type: "sharp", duration: "2.9s", delay: "1.3s" },
-  { top: "15%", left: "73%", size: 1.5, type: "pulse", duration: "4.1s", delay: "0.7s" },
-  { top: "11%", left: "84%", size: 2.5, type: "soft", duration: "3.7s", delay: "2.5s" },
-  { top: "14%", left: "92%", size: 1, type: "sharp", duration: "2.3s", delay: "1.0s" },
-
-  // Mid sky band (16% - 28%)
-  { top: "18%", left: "5%", size: 1.5, type: "pulse", duration: "3.9s", delay: "1.6s" },
-  { top: "20%", left: "17%", size: 2, type: "soft", duration: "4.3s", delay: "0.6s" },
-  { top: "17%", left: "29%", size: 1, type: "sharp", duration: "2.7s", delay: "2.2s" },
-  { top: "22%", left: "35%", size: 1.5, type: "pulse", duration: "3.4s", delay: "0.1s" },
-  { top: "19%", left: "45%", size: 2.5, type: "sharp", duration: "2.4s", delay: "1.8s" },
-  { top: "24%", left: "53%", size: 1, type: "soft", duration: "4.6s", delay: "2.9s" },
-  { top: "18%", left: "64%", size: 2, type: "pulse", duration: "3.3s", delay: "0.5s" },
-  { top: "23%", left: "71%", size: 1.5, type: "sharp", duration: "2.8s", delay: "1.4s" },
-  { top: "20%", left: "82%", size: 1, type: "soft", duration: "4.0s", delay: "2.0s" },
-  { top: "25%", left: "90%", size: 2, type: "pulse", duration: "3.6s", delay: "0.7s" },
-  { top: "27%", left: "97%", size: 1.5, type: "sharp", duration: "2.5s", delay: "1.2s" },
-  { top: "26%", left: "11%", size: 2.5, type: "soft", duration: "4.1s", delay: "2.7s" },
-  { top: "28%", left: "22%", size: 1, type: "sharp", duration: "2.9s", delay: "0.4s" },
-
-  // Lower sky band, above clouds (29% - 41%)
-  { top: "31%", left: "7%", size: 1.5, type: "soft", duration: "3.7s", delay: "1.3s" },
-  { top: "34%", left: "16%", size: 2, type: "pulse", duration: "4.2s", delay: "2.3s" },
-  { top: "30%", left: "27%", size: 1, type: "sharp", duration: "2.6s", delay: "0.9s" },
-  { top: "36%", left: "38%", size: 2.5, type: "soft", duration: "3.5s", delay: "1.7s" },
-  { top: "32%", left: "46%", size: 1.5, type: "sharp", duration: "2.7s", delay: "0.3s" },
-  { top: "37%", left: "57%", size: 1, type: "pulse", duration: "4.4s", delay: "2.6s" },
-  { top: "33%", left: "68%", size: 2, type: "soft", duration: "3.8s", delay: "1.1s" },
-  { top: "38%", left: "77%", size: 1.5, type: "sharp", duration: "2.4s", delay: "2.0s" },
-  { top: "35%", left: "86%", size: 1, type: "pulse", duration: "4.0s", delay: "0.6s" },
-  { top: "39%", left: "94%", size: 2, type: "soft", duration: "3.3s", delay: "1.5s" },
-  { top: "40%", left: "24%", size: 1.5, type: "sharp", duration: "2.8s", delay: "0.2s" },
-  { top: "39%", left: "49%", size: 1, type: "pulse", duration: "4.5s", delay: "1.8s" },
-  { top: "41%", left: "63%", size: 2, type: "soft", duration: "3.9s", delay: "2.4s" },
-  { top: "40%", left: "83%", size: 1.5, type: "sharp", duration: "2.5s", delay: "0.8s" },
-];
+import Footer from "./component/footer";
+import GradientASCII from "./component/GradientASCII";
+import CTA from "./component/cta";
 
 // Two sets of 6 logos from public/logos that smoothly crossfade every 3 seconds
 const logosGroupA = [
@@ -319,161 +269,66 @@ export default function Home() {
   return (
     <div className="w-full font-sans select-none">
       {/* Hero Section */}
-      <section className="relative min-h-screen w-full overflow-hidden bg-black text-white">
-        {/* CSS Keyframes for Blinking Stars */}
-      <style>{`
-        @keyframes blinkSharp {
-          0%, 100% {
-            opacity: 0.15;
-            transform: scale(0.7);
-          }
-          45% {
-            opacity: 0.2;
-            transform: scale(0.8);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.4);
-            box-shadow: 0 0 6px 1.5px rgba(255, 255, 255, 0.95);
-          }
-          55% {
-            opacity: 0.25;
-            transform: scale(0.8);
-          }
-        }
-
-        @keyframes blinkSoft {
-          0%, 100% {
-            opacity: 0.2;
-            transform: scale(0.85);
-          }
-          50% {
-            opacity: 0.95;
-            transform: scale(1.2);
-            box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.8);
-          }
-        }
-
-        @keyframes blinkPulse {
-          0%, 100% {
-            opacity: 0.25;
-            transform: scale(0.9);
-          }
-          30%, 70% {
-            opacity: 0.45;
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.3);
-            box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.85);
-          }
-        }
-
-        .star-sharp {
-          position: absolute;
-          background-color: #ffffff;
-          border-radius: 9999px;
-          animation-name: blinkSharp;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-          pointer-events: none;
-        }
-
-        .star-soft {
-          position: absolute;
-          background-color: #ffffff;
-          border-radius: 9999px;
-          animation-name: blinkSoft;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-          pointer-events: none;
-        }
-
-        .star-pulse {
-          position: absolute;
-          background-color: #ffffff;
-          border-radius: 9999px;
-          animation-name: blinkPulse;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-          pointer-events: none;
-        }
-      `}</style>
-
-      {/* Multiple Blinking Stars positioned exclusively above the clouds */}
-      <div className="absolute inset-x-0 top-0 h-[48%] overflow-hidden pointer-events-none z-10">
-        {blinkingStars.map((star, i) => (
-          <span
-            key={`blinking-star-${i}`}
-            className={
-              star.type === "sharp"
-                ? "star-sharp"
-                : star.type === "pulse"
-                ? "star-pulse"
-                : "star-soft"
-            }
-            style={{
-              top: star.top,
-              left: star.left,
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-              animationDuration: star.duration,
-              animationDelay: star.delay,
-            }}
+      <section className="relative min-h-screen w-full overflow-hidden bg-[#030712] text-white">
+        {/* Interactive Gradient ASCII Background Effect */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <GradientASCII
+            colors={["#0002ff", "#ffffff", "#a5d8ff", "#38bdf8"]}
+            shape="horizon"
+            characters=" =+xX0S8#@"
+            cellSize={18}
+            density={0.8}
+            glyphOpacity={0.85}
+            glow={0.2}
+            depthOfField={0}
+            flicker={0.2}
+            softness={0.5}
+            scale={1}
+            flow={0.5}
+            speed={1}
+            gradientOpacity={0.9}
+            grain={0.08}
+            variation={0}
+            mouseInteraction
+            scrambleRadius={0.1}
+            clickEffect="wave"
+            intro
+            lightMode={false}
           />
-        ))}
-      </div>
-
-      {/* Clouds Video positioned in the lower hero area */}
-      <div className="absolute inset-x-0 bottom-0 pointer-events-none z-10 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-[45vh] sm:h-[55vh] md:h-[65vh] lg:h-[70vh] object-cover object-bottom mix-blend-screen opacity-75"
-        >
-          <source src="/clouds.mp4" type="video/mp4" />
-        </video>
-
-        {/* Seamless top and bottom gradient fades for pure black integration */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-85" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent" />
-      </div>
-
-      {/* Navbar at top (without any background) */}
-      <div className="relative z-30">
-        <Navbar />
-      </div>
-
-      {/* Hero Section Content */}
-      <main className="relative z-20 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center px-6 pb-28 pt-8 text-center sm:px-8">
-        {/* Main Headline */}
-        <h1 className="mt-8 max-w-4xl text-5xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1.08]">
-          Global data.
-          <br />
-          Zero operations.
-        </h1>
-
-        {/* Subtitle */}
-        <p className="mt-6 max-w-xl text-base sm:text-lg md:text-xl text-white/80 leading-relaxed font-normal">
-          High performance Redis, queues and
-          <br className="hidden sm:inline" />
-          {" "}storage without infrastructure management.
-        </p>
-
-        {/* CTA Button */}
-        <div className="mt-8">
-          <Link
-            href="#get-started"
-            className="group inline-flex items-center justify-center rounded-full bg-white px-7 py-2.5 text-sm sm:text-base font-medium text-neutral-900 shadow-sm transition-all duration-200 active:scale-95"
-          >
-            <RollingText text="Get started" />
-          </Link>
         </div>
-      </main>
-    </section>
+
+        {/* Navbar at top */}
+        <div className="relative z-30">
+          <Navbar />
+        </div>
+
+        {/* Hero Section Content */}
+        <main className="relative z-20 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center px-6 pb-28 pt-8 text-center sm:px-8 pointer-events-none">
+          {/* Main Headline */}
+          <h1 className="mt-8 max-w-4xl text-5xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1.08] pointer-events-auto">
+            Global data.
+            <br />
+            Zero operations.
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mt-6 max-w-xl text-base sm:text-lg md:text-xl text-white/80 leading-relaxed font-normal pointer-events-auto">
+            High performance Redis, queues and
+            <br className="hidden sm:inline" />
+            {" "}storage without infrastructure management.
+          </p>
+
+          {/* CTA Button */}
+          <div className="mt-8 pointer-events-auto">
+            <Link
+              href="#get-started"
+              className="group inline-flex items-center justify-center rounded-full bg-white px-7 py-2.5 text-sm sm:text-base font-medium text-neutral-900 shadow-sm transition-all duration-200 active:scale-95"
+            >
+              <RollingText text="Get started" />
+            </Link>
+          </div>
+        </main>
+      </section>
 
     {/* Trusted By Section */}
     <section className="w-full bg-[#FAFAFA] py-20 sm:py-28 px-6 sm:px-8 border-t border-neutral-200/50">
@@ -797,6 +652,12 @@ export default function Home() {
 
     {/* FAQ Section */}
     <FAQ />
+
+    {/* CTA Section */}
+    <CTA />
+
+    {/* Footer Section */}
+    <Footer />
   </div>
 );
 }

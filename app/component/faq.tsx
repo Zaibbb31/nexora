@@ -81,7 +81,7 @@ export default function FAQ({
                 <div
                   key={faq.question}
                   onClick={() => toggleFaq(index)}
-                  className="group rounded-2xl bg-[#FFFFFF] p-5 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-neutral-100/90 transition-all duration-300 hover:shadow-md cursor-pointer select-none"
+                  className="group rounded-2xl bg-[#FFFFFF] p-5 sm:p-6 border border-neutral-100/90 transition-all duration-300 cursor-pointer select-none"
                 >
                   {/* Top Row: Question + Blue Circular Button */}
                   <div className="flex items-center justify-between gap-4">
